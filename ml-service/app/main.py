@@ -22,6 +22,7 @@ async def health_check():
 async def predict(request: PredictionRequest):
     """
     Classify and prioritize email text.
+    Supports both English and German language emails.
     This is a stub implementation using simple rule-based classification.
     In production, replace with actual ML model inference.
     """
@@ -32,22 +33,36 @@ async def predict(request: PredictionRequest):
     category = "general"
     confidence = 0.75
     
-    # Priority detection based on keywords
-    if any(word in text for word in ["urgent", "asap", "critical", "emergency", "wichtig"]):
+    # Priority detection based on keywords (English and German)
+    high_priority_keywords = [
+        "urgent", "asap", "critical", "emergency", "important", "immediately",
+        "dringend", "sofort", "kritisch", "notfall", "wichtig", "unverzüglich"
+    ]
+    low_priority_keywords = [
+        "low priority", "when possible", "eventually", "sometime",
+        "niedrige priorität", "irgendwann", "gelegentlich", "bei gelegenheit"
+    ]
+    
+    if any(word in text for word in high_priority_keywords):
         priority = "high"
         confidence = 0.90
-    elif any(word in text for word in ["low priority", "when possible", "eventually"]):
+    elif any(word in text for word in low_priority_keywords):
         priority = "low"
         confidence = 0.85
     
-    # Category detection
-    if any(word in text for word in ["bug", "error", "issue", "problem", "fehler"]):
+    # Category detection (English and German)
+    bug_keywords = ["bug", "error", "issue", "problem", "fehler", "defekt", "störung"]
+    feature_keywords = ["feature", "enhancement", "request", "funktion", "erweiterung", "anfrage"]
+    question_keywords = ["question", "help", "how to", "frage", "hilfe", "wie"]
+    meeting_keywords = ["meeting", "call", "schedule", "besprechung", "termin", "anruf"]
+    
+    if any(word in text for word in bug_keywords):
         category = "bug"
-    elif any(word in text for word in ["feature", "enhancement", "request", "funktion"]):
+    elif any(word in text for word in feature_keywords):
         category = "feature"
-    elif any(word in text for word in ["question", "help", "how to", "frage", "hilfe"]):
+    elif any(word in text for word in question_keywords):
         category = "question"
-    elif any(word in text for word in ["meeting", "call", "schedule", "termin", "besprechung"]):
+    elif any(word in text for word in meeting_keywords):
         category = "meeting"
     
     return PredictionResponse(

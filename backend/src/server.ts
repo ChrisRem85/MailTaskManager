@@ -27,12 +27,12 @@ let tasks: Task[] = [];
 let taskIdCounter = 1;
 
 // Health Check Endpoint
-app.get('/health', (req: Request, res: Response) => {
+app.get('/health', (_req: Request, res: Response) => {
   res.status(200).json({ status: 'ok' });
 });
 
 // Get all tasks
-app.get('/api/tasks', (req: Request, res: Response) => {
+app.get('/api/tasks', (_req: Request, res: Response) => {
   res.status(200).json(tasks);
 });
 
@@ -42,7 +42,7 @@ app.get('/api/tasks/:id', (req: Request, res: Response) => {
   if (!task) {
     return res.status(404).json({ error: 'Task not found' });
   }
-  res.status(200).json(task);
+  return res.status(200).json(task);
 });
 
 // Create new task
@@ -53,7 +53,7 @@ app.post('/api/tasks', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Title and description are required' });
   }
 
-  // Call ML service for classification (optional, falls back to default)
+  // Call ML service for classification (optional, falls back to default if unavailable)
   let priority = 'medium';
   try {
     const mlResponse = await axios.post(`${ML_SERVICE_URL}/predict`, {
@@ -74,7 +74,7 @@ app.post('/api/tasks', async (req: Request, res: Response) => {
   };
 
   tasks.push(newTask);
-  res.status(201).json(newTask);
+  return res.status(201).json(newTask);
 });
 
 // Update task
@@ -93,7 +93,7 @@ app.put('/api/tasks/:id', (req: Request, res: Response) => {
   };
 
   tasks[taskIndex] = updatedTask;
-  res.status(200).json(updatedTask);
+  return res.status(200).json(updatedTask);
 });
 
 // Delete task
@@ -105,7 +105,7 @@ app.delete('/api/tasks/:id', (req: Request, res: Response) => {
   }
 
   tasks.splice(taskIndex, 1);
-  res.status(204).send();
+  return res.status(204).send();
 });
 
 // Start server

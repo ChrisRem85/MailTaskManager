@@ -1,37 +1,37 @@
-# MailTaskManager - Conversation Documentation
+# MailTaskManager - Project Documentation
 
-## Projektbeschreibung
+## Project Description
 
-MailTaskManager ist ein Full-Stack-Projekt zum automatischen Verarbeiten eingehender E-Mails in Aufgaben. Das System nutzt Machine Learning zur Klassifizierung und Priorisierung von E-Mails und bietet eine intuitive Web-Oberfläche zur Verwaltung.
+MailTaskManager is a full-stack project for automatically processing incoming emails into tasks. The system uses machine learning for email classification and prioritization and provides an intuitive web interface for management.
 
-### Hauptkomponenten
+### Main Components
 
 1. **Backend** (Node.js + TypeScript)
-   - Express-basierte REST API
-   - CRUD-Operationen für Tasks
-   - Integration mit ML-Service für automatische Klassifizierung
-   - PostgreSQL-Datenbankanbindung (vorbereitet)
-   - Health-Check-Endpoint
+   - Express-based REST API
+   - CRUD operations for tasks
+   - Integration with ML service for automatic classification
+   - PostgreSQL database connection (prepared)
+   - Health check endpoint
 
 2. **ML-Service** (Python + FastAPI)
-   - FastAPI-basierter Microservice
-   - Endpoint `/predict` für E-Mail-Klassifizierung
-   - Regelbasierte Klassifizierung (Stub für spätere ML-Modelle)
-   - Priorisierung und Kategorisierung
-   - Health-Check-Endpoint
+   - FastAPI-based microservice
+   - `/predict` endpoint for email classification
+   - Rule-based classification (stub for future ML models)
+   - Prioritization and categorization
+   - Health check endpoint
 
 3. **Frontend** (React + Vite)
-   - Moderne React-Anwendung
-   - Task-Übersicht und -Verwaltung
-   - Erstellen, Bearbeiten, Löschen von Tasks
-   - Status-Updates
-   - Responsive Design
+   - Modern React application
+   - Task overview and management
+   - Create, edit, delete tasks
+   - Status updates
+   - Responsive design
 
-4. **Datenbank** (PostgreSQL)
-   - Containerisiert via Docker Compose
-   - Vorbereitet für Task-Persistierung
+4. **Database** (PostgreSQL)
+   - Containerized via Docker Compose
+   - Prepared for task persistence
 
-### Technologie-Stack
+### Technology Stack
 
 **Backend:**
 - Node.js 18
@@ -58,7 +58,7 @@ MailTaskManager ist ein Full-Stack-Projekt zum automatischen Verarbeiten eingehe
 - PostgreSQL 15
 - GitHub Actions (CI/CD)
 
-## Projektstruktur
+## Project Structure
 
 ```
 MailTaskManager/
@@ -106,37 +106,37 @@ MailTaskManager/
 
 ```
 
-## Entwicklungsanweisungen
+## Development Instructions
 
 ### Initial Setup
 
-1. **Repository klonen:**
+1. **Clone repository:**
    ```bash
    git clone https://github.com/ChrisRem85/MailTaskManager.git
    cd MailTaskManager
    ```
 
-2. **Umgebungsvariablen konfigurieren:**
+2. **Configure environment variables:**
    ```bash
    cp .env.example .env
-   # Bearbeite .env bei Bedarf
+   # Edit .env as needed
    ```
 
-3. **Docker Compose starten:**
+3. **Start Docker Compose:**
    ```bash
    docker compose up --build
    ```
 
-### Lokale Entwicklung (ohne Docker)
+### Local Development (without Docker)
 
 **Backend:**
 ```bash
 cd backend
 npm install
-npm run dev          # Development Server
-npm test            # Tests ausführen
+npm run dev          # Development server
+npm test            # Run tests
 npm run lint        # Linting
-npm run build       # TypeScript kompilieren
+npm run build       # Compile TypeScript
 ```
 
 **ML-Service:**
@@ -146,20 +146,20 @@ python -m venv venv
 venv\Scripts\activate  # Windows
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
-uvicorn app.main:app --reload  # Development Server
-pytest                         # Tests ausführen
+uvicorn app.main:app --reload  # Development server
+pytest                         # Run tests
 ```
 
 **Frontend:**
 ```bash
 cd frontend
 npm install
-npm run dev          # Development Server
-npm run build        # Production Build
+npm run dev          # Development server
+npm run build        # Production build
 npm run lint         # Linting
 ```
 
-## API-Dokumentation
+## API Documentation
 
 ### Backend API (Port 3000)
 
@@ -171,19 +171,19 @@ Response: {"status": "ok"}
 
 **Tasks:**
 ```
-GET    /api/tasks          # Alle Tasks abrufen
-POST   /api/tasks          # Neuen Task erstellen
-GET    /api/tasks/:id      # Task nach ID abrufen
-PUT    /api/tasks/:id      # Task aktualisieren
-DELETE /api/tasks/:id      # Task löschen
+GET    /api/tasks          # Get all tasks
+POST   /api/tasks          # Create new task
+GET    /api/tasks/:id      # Get task by ID
+PUT    /api/tasks/:id      # Update task
+DELETE /api/tasks/:id      # Delete task
 ```
 
-**Task-Objekt:**
+**Task Object:**
 ```json
 {
   "id": "1",
-  "title": "Task-Titel",
-  "description": "Beschreibung",
+  "title": "Task title",
+  "description": "Description",
   "priority": "high|medium|low",
   "status": "open|in-progress|completed",
   "createdAt": "2025-10-26T10:00:00.000Z"
@@ -201,7 +201,7 @@ Response: {"status": "ok"}
 **Prediction:**
 ```
 POST /predict
-Request: {"text": "E-Mail-Text"}
+Request: {"text": "Email text"}
 Response: {
   "priority": "high|medium|low",
   "category": "bug|feature|question|meeting|general",
@@ -211,73 +211,73 @@ Response: {
 
 ## CI/CD Pipeline
 
-Die GitHub Actions Pipeline führt bei jedem Push automatisch aus:
+The GitHub Actions pipeline automatically runs on every push:
 
 1. **Backend Tests:**
-   - Dependency-Installation
-   - ESLint-Prüfung
-   - Jest-Tests
-   - TypeScript-Build
+   - Dependency installation
+   - ESLint checks
+   - Jest tests
+   - TypeScript build
 
 2. **ML-Service Tests:**
-   - Dependency-Installation
-   - Pytest-Tests
+   - Dependency installation
+   - Pytest tests
 
 3. **Frontend Build:**
-   - Dependency-Installation
-   - ESLint-Prüfung
-   - Vite-Build
+   - Dependency installation
+   - ESLint checks
+   - Vite build
 
 4. **Docker Build Test:**
-   - Docker-Images bauen
-   - Services starten
-   - Health-Checks durchführen
-   - Services herunterfahren
+   - Build Docker images
+   - Start services
+   - Run health checks
+   - Shut down services
 
-## Sicherheitshinweise
+## Security Notes
 
-- ⚠️ Keine Secrets im Repository einchecken
-- `.env` wird via `.gitignore` ausgeschlossen
-- `.env.example` dient als Template ohne echte Credentials
-- Für Production: Sichere Secret-Management-Lösungen nutzen
-- Default-Passwörter in Production ändern
+- ⚠️ Never commit secrets to the repository
+- `.env` is excluded via `.gitignore`
+- `.env.example` serves as a template without real credentials
+- For production: Use secure secret management solutions
+- Change default passwords in production
 
-## Nächste Schritte
+## Next Steps
 
-### Kurzfristig:
-1. PostgreSQL-Integration im Backend implementieren
-2. Datenbankmigrationen einrichten
-3. ML-Modell trainieren und integrieren
-4. E-Mail-Connector implementieren
+### Short-term:
+1. Implement PostgreSQL integration in backend
+2. Set up database migrations
+3. Train and integrate ML model
+4. Implement email connector
 
-### Mittelfristig:
-1. Authentifizierung & Authorization
-2. Benutzer-Management
-3. E-Mail-Synchronisation
-4. Benachrichtigungen
+### Medium-term:
+1. Authentication & authorization
+2. User management
+3. Email synchronization
+4. Notifications
 
-### Langfristig:
-1. Advanced ML-Features
-2. Dashboard & Analytics
-3. Mobile App
-4. Integration mit anderen Diensten
+### Long-term:
+1. Advanced ML features
+2. Dashboard & analytics
+3. Mobile app
+4. Integration with other services
 
-## Lizenz
+## License
 
-MIT License - siehe LICENSE-Datei für Details.
+MIT License - see LICENSE file for details.
 
-## Autor
+## Author
 
 ChrisRem85
 
-## Projektinitialisierung
+## Project Initialization
 
-Dieses Projekt wurde am 26. Oktober 2025 als initiales Scaffold erstellt mit:
-- Node.js + TypeScript Backend
-- Python + FastAPI ML-Service
-- React + Vite Frontend
-- PostgreSQL Datenbank
-- Docker Compose Setup
+This project was created on October 26, 2025 as an initial scaffold with:
+- Node.js + TypeScript backend
+- Python + FastAPI ML service
+- React + Vite frontend
+- PostgreSQL database
+- Docker Compose setup
 - GitHub Actions CI/CD
 
-Initial Commit: "Initial scaffold: backend, ml-service, frontend, docker compose, docs"
+Initial commit: "Initial scaffold: backend, ml-service, frontend, docker compose, docs"

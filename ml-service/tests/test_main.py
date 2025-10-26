@@ -49,3 +49,35 @@ def test_predict_missing_text():
     """Test prediction with missing text field"""
     response = client.post("/predict", json={})
     assert response.status_code == 422  # Validation error
+
+def test_predict_german_high_priority():
+    """Test high priority detection with German text"""
+    test_data = {"text": "Dringend: Kritischer Fehler im System"}
+    response = client.post("/predict", json=test_data)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["priority"] == "high"
+
+def test_predict_german_bug_category():
+    """Test bug category detection with German text"""
+    test_data = {"text": "Es gibt einen Fehler in der Anwendung"}
+    response = client.post("/predict", json=test_data)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["category"] == "bug"
+
+def test_predict_german_feature_request():
+    """Test feature category detection with German text"""
+    test_data = {"text": "Ich hätte gerne eine neue Funktion"}
+    response = client.post("/predict", json=test_data)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["category"] == "feature"
+
+def test_predict_german_question():
+    """Test question category detection with German text"""
+    test_data = {"text": "Ich brauche Hilfe mit dieser Frage"}
+    response = client.post("/predict", json=test_data)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["category"] == "question"
